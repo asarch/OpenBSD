@@ -3,9 +3,9 @@ System administration settings
 
 ## Installation from USB Stick
 
-You will to use some virtualization service like Qemu, Xen o VirtualBox to make a full installation on the USB that you will use to install OpenBSD on the desirable box.
+You will need to use some virtualization service like Qemu, Xen o VirtualBox to make a full installation on the USB that you will use to install OpenBSD on the desirable box.
 
-After you have complete the installation process in the USB stick, you need to mount the installation ISO image to the get the sets.
+After you have complete the installation process in the USB stick, you need to mount the installation ISO image to the get the sets to the USB stick.
 
 Mount the installation image:
 
@@ -58,3 +58,28 @@ cp /home/bsd.rd /
 
 Reboot the system and boot with the new bsd.rd installation kernel:
 
+## Configuration
+
+Immediately after the installation process has been completed and before the first reboot, you needo to configure your brand new system.
+
+Backup the new `/etc`:
+
+```bash
+cd /mnt
+tar vcf etc.tar etc/
+```
+
+Change the name of the box:
+
+```bash
+echo my-host-name > etc/myname
+```
+
+Enable soft updates:
+
+```bash
+ed etc/fstab
+s/rw/&,sofdep/
+.
+wq
+```
